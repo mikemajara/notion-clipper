@@ -113,24 +113,31 @@ async function getDatabaseSelectorProperties() {
 
 function extractValuesWithConfig(
   page: Page,
-  html: CheerioAPI | undefined,
+  $: CheerioAPI | undefined,
   pageConfig: PageConfig | undefined,
 ) {
-  if (!html) {
-    throw Error("html cannot be undefined");
+  if (!$) {
+    throw Error("$ cannot be undefined");
   }
   logger.debug(
     "page-parser.ts:extractValuesWithConfig:pageConfig",
     pageConfig,
   );
   return pageConfig?.selectors.map(({ property, selector }) => {
-    let parsedValue = html(selector);
-    logger.debug("selector", Object.keys(parsedValue));
-    logger.debug("value", parsedValue.val());
+    let parsedValue = $(selector);
+    // logger.debug(`selector`, parsedValue);
+    // logger.debug(`value`, parsedValue);
+    // logger.debug(`length ${selector}`, parsedValue.length);
+    logger.debug(`element(s) ${selector}`);
+    if (parsedValue.length > 0)
+      parsedValue.each((i, e) => logger.debug($(e).html()));
+    else logger.debug(parsedValue.html());
+    // );
+    // logger.debug(`length`, parsedValue.length);
     return {
       [property]:
         parsedValue.length > 0
-          ? parsedValue.map((i, e) => html(e).html())
+          ? parsedValue.each((i, e) => $(e).html())
           : parsedValue.html()?.trim(),
     };
   });
