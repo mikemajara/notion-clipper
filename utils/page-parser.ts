@@ -98,7 +98,7 @@ async function parseRecord(
     html,
     values: extractValuesWithConfig(page, html, pageConfig),
   };
-  // logger.debug(result);
+  logger.debug(`page-parser.tsx:parseRecord:result`, result);
   return result;
 }
 
@@ -123,24 +123,33 @@ function extractValuesWithConfig(
     "page-parser.ts:extractValuesWithConfig:pageConfig",
     pageConfig,
   );
-  return pageConfig?.selectors.map(({ property, selector }) => {
+  const resultObject = {};
+  for (const { property, selector } of pageConfig?.selectors || []) {
+    // }
+    // return pageConfig?.selectors.forEach(({ property, selector }) => {
     let parsedValue = $(selector);
     // logger.debug(`selector`, parsedValue);
     // logger.debug(`value`, parsedValue);
     // logger.debug(`length ${selector}`, parsedValue.length);
-    logger.debug(`element(s) ${selector}`);
+    logger.debug(`element(s) ${property} - ${selector}`);
     if (parsedValue.length > 0)
-      parsedValue.each((i, e) => logger.debug($(e).html()));
+      logger.debug(
+        parsedValue
+          .map((i, e) => $(e).html())
+          .get()
+          .join(", "),
+      );
     else logger.debug(parsedValue.html());
-    // );
-    // logger.debug(`length`, parsedValue.length);
-    return {
-      [property]:
-        parsedValue.length > 0
-          ? parsedValue.each((i, e) => $(e).html())
-          : parsedValue.html()?.trim(),
-    };
-  });
+
+    resultObject[property] =
+      parsedValue.length > 1
+        ? parsedValue
+            .map((i, e) => $(e).html())
+            .get()
+            .join(", ")
+        : parsedValue.html()?.trim();
+  }
+  return resultObject;
 }
 
 function parseHtml(url: string): string {
