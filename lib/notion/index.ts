@@ -18,8 +18,8 @@ const DEFAULT_PAGE_ID = process.env.NOTION_PAGE_ID || "";
 
 export const queryDatabase = async (
   databaseId: string = DEFAULT_PAGE_ID,
-  filter: any = {},
-  sorts: any = {},
+  filter: any = [],
+  sorts: any = [],
 ): Promise<any[]> => {
   if (!databaseId) {
     logger.error("Database ID cannot be empty");
@@ -28,13 +28,7 @@ export const queryDatabase = async (
   const response = await notion.databases.query({
     database_id: databaseId,
     // filter,
-    sorts: [
-      {
-        property: "Name",
-        direction: "ascending",
-        ...sorts,
-      },
-    ],
+    // sorts,
   });
   return response.results;
 };
@@ -116,6 +110,9 @@ export const getPagePropertyValue = (
       return page.properties?.[property]?.[type].map(
         (block: { name: any }) => block.name,
       );
+    }
+    if (type === "select") {
+      return page.properties?.[property]?.[type].name;
     }
     if (type === "url") {
       return page.properties?.[property]?.[type];

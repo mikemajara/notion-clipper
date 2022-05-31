@@ -13,7 +13,7 @@ import { parsePageConfig, PageConfig } from "./page-config-parser";
 import { parseCollection, RecordParsed } from "./page-parser";
 import _ from "lodash";
 
-const PAGE_CONFIG_ID = "f02f18ada9b6499a9224fcff3570eb5a";
+const PAGE_CONFIG_ID = "48b5d5c7fac64ffa9217fa6d9e4b8726";
 const NOTION_PAGE_ID = "fed0776d23574745beb578cb4de801d7";
 
 const fixture = {

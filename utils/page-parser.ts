@@ -29,7 +29,7 @@ type SelectorField = {
   value: any;
 };
 
-const PAGE_CONFIG_ID = "f02f18ada9b6499a9224fcff3570eb5a";
+const PAGE_CONFIG_ID = "48b5d5c7fac64ffa9217fa6d9e4b8726";
 
 export const parseCollection = async (
   pageId: string,
@@ -63,6 +63,10 @@ async function parsePages(records: Page[]) {
     const recordParsed = await parseRecord(record, pageConfig);
     parsedRecords.push(recordParsed);
   }
+  logger.debug(
+    `page-parser.ts:parsePages:parsedRecords`,
+    parsedRecords,
+  );
   return parsedRecords;
 }
 
