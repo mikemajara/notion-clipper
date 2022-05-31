@@ -19,10 +19,10 @@ const NOTION_PAGE_ID = "fed0776d23574745beb578cb4de801d7";
 const fixture = {
   votes: {
     type: "number",
-    value: "8.488",
+    value: 1.64,
   },
-  rating: { type: "number", value: "6,9" },
-  title: {
+  rating: { type: "number", value: 8.7 },
+  Name: {
     type: "title",
     value: "Doctor Strange en el multiverso de la locura",
   },
@@ -54,11 +54,12 @@ function updateRecord(record: RecordParsed) {
       [type]: translateToApiUpdateProperty(property),
     };
   });
-  logger.debug("page-updater:updateRecord", JSON.stringify(props));
-  // _.forEach(record.values, (value, key) => {
-  //   updatePage(record.id,
-  //     )
-  // })
+  logger.debug(
+    `page-updater:updateRecord:${record.id}`,
+    JSON.stringify(props),
+  );
+
+  updatePage(record.id, props);
 }
 
 const translateToApiUpdateProperty = (property: {
