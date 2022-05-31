@@ -56,9 +56,7 @@ async function parsePages(records: Page[]) {
   let parsedRecords = [];
   // TODO: parsePageConfig should receive the parent database id and
   // return the pageConfig in one go.
-  const pageConfig = (await parsePageConfig(PAGE_CONFIG_ID)).find(
-    (e) => (e.pageId = records[0].parent.database_id),
-  );
+  const pageConfig = await parsePageConfig(PAGE_CONFIG_ID);
   for (const record of records) {
     const recordParsed = await parseRecord(record, pageConfig);
     parsedRecords.push(recordParsed);
@@ -98,19 +96,32 @@ function extractValuesWithConfig(
   if (!$) {
     throw Error("$ cannot be undefined");
   }
-
-  const resultObject: any = {};
-  for (const { property, selector } of pageConfig?.selectors || []) {
-    let parsedValue = $(selector);
-    resultObject[property] =
-      parsedValue.length > 1
-        ? parsedValue
-            .map((i, e) => $(e).html())
-            .get()
-            .join(", ")
-        : parsedValue.html()?.trim();
+  if (!pageConfig) {
+    throw Error("pageConfig cannot be undefined");
   }
-  return resultObject;
+  logger.debug(
+    `page-parser.ts:extractValuesWithConfig:pageConfig`,
+    pageConfig,
+  );
+  const result = [];
+  for (let config of pageConfig) {
+    let parsedValue = $(config.selector);
+    result.push({
+      ...config,
+      value:
+        parsedValue.length > 1
+          ? parsedValue
+              .map((i, e) => $(e).html())
+              .get()
+              .join(", ")
+          : parsedValue.html()?.trim(),
+    });
+  }
+  logger.debug(
+    `page-parser.ts:extractValuesWithConfig:result`,
+    result,
+  );
+  return result;
 }
 
 function parseHtml(url: string): string {
