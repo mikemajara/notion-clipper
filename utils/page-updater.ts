@@ -16,21 +16,32 @@ import _ from "lodash";
 const PAGE_CONFIG_ID = "48b5d5c7fac64ffa9217fa6d9e4b8726";
 const NOTION_PAGE_ID = "fed0776d23574745beb578cb4de801d7";
 
-const fixture = {
-  votes: {
+const fixture = [
+  {
+    property: "votes",
     type: "number",
+    selector: "",
     value: 1.64,
   },
-  rating: { type: "number", value: 8.7 },
-  Name: {
+  {
+    property: "rating",
+    type: "number",
+    selector: "",
+    value: 8.7,
+  },
+  {
+    property: "Name",
     type: "title",
+    selector: "",
     value: "Doctor Strange en el multiverso de la locura",
   },
-  tags: {
+  {
+    property: "tags",
     type: "multi_select",
+    selector: "",
     value: ["Fantástico", "Acción", "Terror"],
   },
-};
+];
 
 export async function updateCollection(
   page: string = NOTION_PAGE_ID,
@@ -42,16 +53,20 @@ export async function updateCollection(
 
 function updateRecords(parsedCollection: RecordParsed[]) {
   for (let record of parsedCollection) {
+    logger.debug(
+      `page-updater.ts:updateRecords: Updating record...`,
+      record,
+    );
     updateRecord(record);
   }
 }
 
 function updateRecord(record: RecordParsed) {
   const props: any = {};
-  const properties = _.map(fixture, (property, key) => {
-    const { type, value } = property;
-    props[key] = {
-      [type]: translateToApiUpdateProperty(property),
+  const properties = _.map(record.properties, (configValue, key) => {
+    const { type, value, property } = configValue;
+    props[property] = {
+      [type]: translateToApiUpdateProperty(configValue),
     };
   });
   logger.debug(
@@ -59,14 +74,14 @@ function updateRecord(record: RecordParsed) {
     JSON.stringify(props),
   );
 
-  updatePage(record.id, props);
+  updatePage(record.id, { ...props, parsed: { checkbox: true } });
 }
 
-const translateToApiUpdateProperty = (property: {
+const translateToApiUpdateProperty = (configValue: {
   type: string;
   value: any;
 }) => {
-  const { type, value } = property;
+  const { type, value } = configValue;
 
   switch (type) {
     case "number":
@@ -78,6 +93,6 @@ const translateToApiUpdateProperty = (property: {
     case "rich_text":
       return [{ text: { content: value } }];
     default:
-      return "Type not supported";
+      return `Type ${type} not supported`;
   }
 };

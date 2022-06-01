@@ -82,7 +82,9 @@ async function parseRecord(
     id,
     url,
     // html,
-    properties: extractValuesWithConfig(page, html, pageConfig),
+    properties: typeCheckAndConvertValues(
+      extractValuesWithConfig(page, html, pageConfig),
+    ),
   };
 
   return result;
@@ -110,10 +112,7 @@ function extractValuesWithConfig(
       ...config,
       value:
         parsedValue.length > 1
-          ? parsedValue
-              .map((i, e) => $(e).html())
-              .get()
-              .join(", ")
+          ? parsedValue.map((i, e) => $(e).html()).get()
           : parsedValue.html()?.trim(),
     });
   }
@@ -122,6 +121,16 @@ function extractValuesWithConfig(
     result,
   );
   return result;
+}
+
+function typeCheckAndConvertValues(values: any) {
+  return values.map((e: any) => {
+    if (e.type === "number" && typeof e.value !== "number") {
+      e.value = parseFloat(e.value);
+    }
+    logger.debug(`page-parser.ts:typeCheckAndConvertValues:e`, e);
+    return e;
+  });
 }
 
 function parseHtml(url: string): string {

@@ -1,8 +1,8 @@
-import Link from 'next/link';
-import s from './Footer.module.css';
+import Link from "next/link";
+import s from "./Footer.module.css";
 
-import Logo from 'components/icons/Logo';
-import GitHub from 'components/icons/GitHub';
+import Logo from "components/icons/Logo";
+import GitHub from "components/icons/GitHub";
 
 export default function Footer() {
   return (
@@ -21,7 +21,7 @@ export default function Footer() {
         <div className="col-span-1 lg:col-span-2">
           <ul className="flex flex-initial flex-col md:flex-1">
             <li className="py-3 md:py-0 md:pb-4">
-              <Link href="/">
+              <Link href="/home">
                 <a className="text-white hover:text-zinc-200 transition ease-in-out duration-150">
                   Home
                 </a>

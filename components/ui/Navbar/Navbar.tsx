@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import s from './Navbar.module.css';
+import Link from "next/link";
+import s from "./Navbar.module.css";
 
-import Logo from 'components/icons/Logo';
-import { useUser } from 'utils/useUser';
-import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
-import { useRouter } from 'next/router';
+import Logo from "components/icons/Logo";
+import { useUser } from "utils/useUser";
+import { supabaseClient } from "@supabase/supabase-auth-helpers/nextjs";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const { user } = useUser();
@@ -18,7 +18,7 @@ const Navbar = () => {
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex justify-between align-center flex-row py-4 md:py-6 relative">
           <div className="flex flex-1 items-center">
-            <Link href="/">
+            <Link href="/home">
               <a className={s.logo} aria-label="Logo">
                 <Logo />
               </a>
