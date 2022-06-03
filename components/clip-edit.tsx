@@ -59,11 +59,13 @@ export const ClipEdit = () => {
   );
 };
 
-export function ClipEditModal() {
+export function ClipEditModal(props: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { button } = props;
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
+      {React.cloneElement(button, { onClick: onOpen })}
+      {/* <Button onClick={onOpen}>Open Modal</Button> */}
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

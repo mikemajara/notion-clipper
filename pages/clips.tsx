@@ -43,7 +43,7 @@ const Clips = () => {
   return (
     <Stack p={10}>
       <Heading size="xl">Clips</Heading>
-      <ClipEditModal />
+
       <Stack direction="row" spacing={10}>
         <FormComponent
           label="Clip name"
@@ -87,9 +87,13 @@ const Clips = () => {
         <IconButton icon={<BiTrashAlt />} aria-label="delete" />
       </Stack>
       <Flex>
-        <Button leftIcon={<AddIcon fontSize="sm" />}>
-          Add new clip
-        </Button>
+        <ClipEditModal
+          button={
+            <Button leftIcon={<AddIcon fontSize="sm" />}>
+              Add new clip
+            </Button>
+          }
+        />
       </Flex>
     </Stack>
   );
