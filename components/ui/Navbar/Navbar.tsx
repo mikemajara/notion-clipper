@@ -30,6 +30,9 @@ const Navbar = () => {
               <Link href="/account">
                 <a className={s.link}>Account</a>
               </Link>
+              <Link href="/clips">
+                <a className={s.link}>Clips</a>
+              </Link>
               <Link href="/notion-tables">
                 <a className={s.link}>Notion Tables</a>
               </Link>

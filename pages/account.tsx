@@ -34,7 +34,7 @@ function Card({ title, description, footer, children }: Props) {
       my={8}
     >
       <Stack px={5} py={4} spacing={4}>
-        <chakra.h3 color="white" fontSize="2xl" mb={1}>
+        <chakra.h3 fontSize="2xl" mb={1}>
           {title}
         </chakra.h3>
         <chakra.p>{description}</chakra.p>
@@ -104,7 +104,6 @@ export default function Account({ user }: { user: User }) {
         <chakra.h1
           fontSize="5xl"
           fontWeight="extrabold"
-          textColor="white"
           textAlign={{ sm: "center" }}
         >
           Account
@@ -121,51 +120,6 @@ export default function Account({ user }: { user: User }) {
         </chakra.p>
       </Stack>
       <div className="p-4">
-        <Card
-          title="Your Notion Configuration Page"
-          description={
-            subscription
-              ? `You are currently on the ${subscription?.prices?.products?.name} plan.`
-              : ""
-          }
-          footer={
-            <div className="flex items-start justify-between flex-col sm:flex-row sm:items-center">
-              <p className="pb-4 sm:pb-0">
-                Manage your subscription on Stripe.
-              </p>
-              <div className="flex items-end justify-between space-x-3">
-                <Button
-                  variant="slim"
-                  loading={loading}
-                  // disabled={loading || !subscription}
-                  onClick={() => {
-                    console.log(
-                      ky.get("/api/notion/parse-pages").json(),
-                    );
-                  }}
-                >
-                  Parse pages
-                </Button>
-                <Button
-                  variant="slim"
-                  loading={loading}
-                  disabled={loading || !subscription}
-                  onClick={redirectToCustomerPortal}
-                >
-                  Save
-                </Button>
-              </div>
-            </div>
-          }
-        >
-          <input
-            type="text"
-            className="p-2 rounded-md border border-white"
-            value={pageId}
-            onChange={(e) => setPageId(e.target.value)}
-          />
-        </Card>
-
         <Card
           title="Your Name"
           description="Please enter your full name, or a display name you are comfortable with."
@@ -185,7 +139,7 @@ export default function Account({ user }: { user: User }) {
         >
           <input
             type="text"
-            className="p-2 rounded-md border border-white"
+            className="p-2 rounded-md border "
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -197,7 +151,6 @@ export default function Account({ user }: { user: User }) {
         >
           <Input
             value={user ? user.email : undefined}
-            color="white"
             // className="text-xl mt-8 mb-4 font-semibold"
           />
         </Card>

@@ -9,6 +9,7 @@
     "stripe:listen": "stripe listen --forward-to=localhost:3000/api/webhooks --project-name=saas-starter"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.1",
     "@chakra-ui/react": "^2.1.2",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
@@ -26,6 +27,9 @@
     "next": "12",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-hook-form": "^7.31.3",
+    "react-hook-form-generator": "https://github.com/laakal/react-hook-form-generator",
+    "react-icons": "^4.4.0",
     "react-merge-refs": "1.1.0",
     "react-query": "^3.38.0",
     "stripe": "8.201.0",
