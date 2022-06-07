@@ -14,32 +14,20 @@ import {
 } from "@chakra-ui/react";
 
 const schema = {
-  firstName: {
+  clipName: {
     type: "text",
-    label: "First Name",
+    label: "Clip name",
     isRequired: true,
   },
-  age: {
-    type: "number",
-    label: "Number",
+  collectionPageId: {
+    type: "text",
+    label: "Collection Page ID",
+    isRequired: true,
   },
-  contacts: {
-    type: "array",
-    label: "Contacts",
-    itemField: {
-      type: "object",
-      properties: {
-        firstName: {
-          type: "text",
-          label: "First Name",
-        },
-        phoneNumber: {
-          type: "text",
-          label: "Phone Number",
-          htmlInputType: "tel",
-        },
-      },
-    },
+  configPageId: {
+    type: "text",
+    label: "Config Page ID",
+    isRequired: true,
   },
 };
 

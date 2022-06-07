@@ -138,7 +138,7 @@ export default function Header() {
                 display={{ base: "none", md: "flex" }}
               >
                 {MENU_ITEMS.map((e) => (
-                  <NextLink href={e.href}>
+                  <NextLink href={e.href} key={e.label}>
                     <Button
                       key={e.label}
                       bg={bg}
