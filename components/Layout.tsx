@@ -1,10 +1,11 @@
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+import Head from "next/head";
+import { useRouter } from "next/router";
 
-import Navbar from 'components/ui/Navbar';
-import Footer from 'components/ui/Footer';
-import { ReactNode } from 'react';
-import { PageMeta } from '../types';
+import Navbar from "components/ui/Navbar";
+import Footer from "components/ui/Footer";
+import { ReactNode } from "react";
+import { PageMeta } from "../types";
+import { chakra } from "@chakra-ui/react";
 
 interface Props {
   children: ReactNode;
@@ -14,10 +15,10 @@ interface Props {
 export default function Layout({ children, meta: pageMeta }: Props) {
   const router = useRouter();
   const meta = {
-    title: 'Next.js Subscription Starter',
-    description: 'Brought to you by Vercel, Stripe, and Supabase.',
-    cardImage: '/og.png',
-    ...pageMeta
+    title: "Next.js Subscription Starter",
+    description: "Brought to you by Vercel, Stripe, and Supabase.",
+    cardImage: "/og.png",
+    ...pageMeta,
   };
 
   return (
@@ -27,7 +28,10 @@ export default function Layout({ children, meta: pageMeta }: Props) {
         <meta name="robots" content="follow, index" />
         <link href="/favicon.ico" rel="shortcut icon" />
         <meta content={meta.description} name="description" />
-        <meta property="og:url" content={`https://subscription-starter.vercel.app${router.asPath}`} />
+        <meta
+          property="og:url"
+          content={`https://subscription-starter.vercel.app${router.asPath}`}
+        />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content={meta.title} />
         <meta property="og:description" content={meta.description} />
@@ -40,7 +44,9 @@ export default function Layout({ children, meta: pageMeta }: Props) {
         <meta name="twitter:image" content={meta.cardImage} />
       </Head>
       <Navbar />
-      <main id="skip">{children}</main>
+      <chakra.main id="skip" minH="80vh">
+        {children}
+      </chakra.main>
       <Footer />
     </>
   );
